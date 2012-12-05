@@ -8,7 +8,7 @@ describe Apidae::Hive do
 
   describe "routes" do
     it "should not respond to /" do
-      browser.get '/plop'
+      browser.get '/'
       browser.last_response.status.should == 404
     end
 
