@@ -2,17 +2,19 @@
 
 # Libraries API best bud !
 require 'forwardable'
+
 # MIME types... unsatisfactory though
 require 'rack/mime'
 
 # the modules below are all included by the application
-# 
+# the class is how we want to model paths
 module Apidae
 
   # Contruct handles the output elements pile
   # Basically an Array that knows how to pre-fill
-  # itself (with layout) and which elements can
-  # be refered to as body and title
+  # itself (with layout), and which of its elements
+  # can be refered to as body and title
+
   # This may be short-lived. 'Don't like it...
   module Construct
 
@@ -34,15 +36,18 @@ module Apidae
     def current_path
       # nasty parentheses-operator-bloated line
       # but i hate doing more for that kind of stuff
-      # So : current path as a Cell instance, string is splat if any,
-      # '' otherwise
+      # So : 
+      #  - current path as a Cell instance
+      #  - string is splat if any
+      #  -  '' otherwise
       @current_path ||= honeycomb((params.any? && params['splat'].first) || '')
     end
 
   end
 
-  # The queen names what the hive cells are made of and the cell map
-  # in the hive
+  # The queen names what the hive cells are made of and 
+  # the cell map in the hive
+
   # Not sure of the module name and its responsibilities
   # Likely to change as well...
   module Queen
@@ -71,7 +76,8 @@ module Apidae
     # directories, lists, whatever
     def row
       construct do |assemblage|
-        # parent_link if not designated root directory
+        # parent_link if not displaying the 
+        # designated root directory
         current_path.empty? || assemblage <<
           Wax.parent_link(current_path) <<
           Wax.new_line << Wax.new_line
@@ -103,7 +109,7 @@ module Apidae
         Wax.content(current_path)
     end
 
-    # serve cell, file, individuals, whatever contents
+    # serve cell, file, individual, whatever, contents
     def honey
       # (oh... that's why current_path
       # responds to Pathname interface !)
@@ -115,8 +121,9 @@ module Apidae
 
   # this is the interface of a cell, file, individual, whatever,
   # in the file tree.
+
   # I made it a string responding to some of the Pathname
-  # interface, but it'll probably change as a Pathname
+  # interface, but it'll probably change into a Pathname
   # who knows when to stringify itself when needed
   class Cell < String
 

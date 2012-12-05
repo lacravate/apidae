@@ -20,7 +20,7 @@ require 'apidae/wax'
 require 'apidae/wax/assemblage'
 
 # Modules and classes to define some
-# "sort off" architecture and avoid a
+# "sort of" architecture and avoid a
 # disgraceful "const_set" fest
 module Apidae
   class Hive

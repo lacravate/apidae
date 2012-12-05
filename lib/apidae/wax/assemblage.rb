@@ -1,12 +1,13 @@
 # encoding: utf-8
 
-# i didn't want to use templates and templating system. Piling up HTML
-# strings in an array was sufficient. 
+# I didn't want to use templates and templating system. 
+# Piling up HTML strings in an array was sufficient. 
 
 # But i figured out that, lean as the application and its rendering might
 # be, i can't decently use anything HTML that hasn't got a minimal layout
 
 # So i more or less coded my own templating system... No !!!
+
 module Apidae
 
   module Wax
@@ -26,7 +27,7 @@ module Apidae
         construct.each_with_index do |value, index|
           self[index] = value
 
-          # Ok laugh... In the layout, the body is where an
+          # Ok laugh... In the layout above, the body is where an
           # empty line is found.
           @body = value if value =~ /^$/
 

@@ -19,8 +19,8 @@ module Apidae
   # and shorter
   module Wax
 
-    # so here, one method per HTML element
-    # template element is a base64-encoded string
+    # so here, one method per HTML element.
+    # Template element is a base64-encoded string
     # decoded, on which substitutions are made
     # Giggles !
     class << self

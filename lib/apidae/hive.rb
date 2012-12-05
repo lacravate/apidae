@@ -8,18 +8,19 @@ module Apidae
   # Do i need more ? We'll see.
   class HiveImplationException < Exception; end
 
+  # the app'. Thanks to Mr Blue_eyes talent
   class Hive < Sinatra::Base
 
     # Libraries API best bud !
     # i am old but i haven't reached dotage yet.
-    # I just like to repeat mylself
+    # I just like to repeat myself.
     extend Forwardable
 
     # less code
     # and "settings" is not pretty. So...
     def_delegators :settings, :location, :population
 
-    # routes from configuration, registering and calling
+    # Routes from configuration. Registering and calling
     register Sinatra::WaysAndMeans
     ways_and_means!
 
