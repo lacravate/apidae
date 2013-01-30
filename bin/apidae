@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path('../lib', __FILE__)
+
+require 'getopt/long'
+
+require 'apidae'
+
+options = Getopt::Long.getopts(
+  ['--help', Getopt::OPTIONAL],
+  ['--server', Getopt::OPTIONAL],
+  ['--port', Getopt::OPTIONAL],
+  ['--daemonize', Getopt::OPTIONAL],
+  ['--browse', Getopt::OPTIONAL]
+)
+
+USAGE = "Usage : #{__FILE__} [--server <server_name> --port <port_number> --daemonize --browse </path/to/browse>]"
+
+if ['help', 'h'].any? { |o| options.has_key? o }
+  puts USAGE
+  exit
+end
+
+Apidae::Hive.location = options.delete('browse') { '.' }
+Apidae::Hive.run! options
