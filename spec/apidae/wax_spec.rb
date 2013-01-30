@@ -47,6 +47,12 @@ describe Apidae::Wax::Link do
   end
 end
 
+describe Apidae::Wax::Image do
+  it "should render an image tag" do
+    (described_class.new << 'plop.jpg').should == '<img src="/read/plop.jpg">'
+  end
+end
+
 describe Apidae::Wax::Style do
   it_should_behave_like "wax_body"
 end

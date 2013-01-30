@@ -15,7 +15,7 @@ module Apidae
       ],
       Style:      [ "PHN0eWxlPgpib2R5e21hcmdpbjowOyBwYWRkaW5nOjA7IGZvbnQtc2l6ZTox\nM3B4OyBmb250LWZhbWlseTpHZW9yZ2lhLCAiVGltZXMgTmV3IFJvbWFuIiwg\nVGltZXMsIHNlcmlmOyBjb2xvcjojNjY2NjY2OyBiYWNrZ3JvdW5kLWNvbG9y\nOiNGRkZGRkY7IH0KaW1ne2Rpc3BsYXk6YmxvY2s7IG1hcmdpbjowOyBwYWRk\naW5nOjA7IGJvcmRlcjpub25lO30KYXtvdXRsaW5lOm5vbmU7IHRleHQtZGVj\nb3JhdGlvbjpub25lOyBjb2xvcjojMDU5QkQ4OyBiYWNrZ3JvdW5kLWNvbG9y\nOiNGRkZGRkY7fQpsaXtsaXN0LXN0eWxlLXR5cGU6bm9uZTsgbWFyZ2luOjA7\nIHBhZGRpbmc6MDt9CnVseyBwYWRkaW5nLWxlZnQ6IDIwcHg7fQo8L3N0eWxl\nPgo=\n" ],
       Link:       [ "PGEgaHJlZj0iLy8iPjwvYT4=\n",     [ /(\/)(.*?)(\/)/, /(\/)(.*?)(\")/, /(>)(.*?)(<)/ ] ],
-      Image:      [ "PGltZyBzcmM9Ii9tZWRpYS8iPg==\n", /(\/)(.*?)(\")/ ],
+      Image:      [ "PGltZyBzcmM9Ii9yZWFkLyI+\n", /(\/)(.*?)(\")/ ],
       Text:       [ "PHA+PC9wPg==\n",                 /(>)(.*?)(<)/ ],
       Formated:   [ "PHByZT48L3ByZT4=\n",             /(>)(.*?)(<)/ ],
       List:       [ "PHVsPjwvdWw+\n",                 /(ul>)(.*?)(<\/ul)/ ],
