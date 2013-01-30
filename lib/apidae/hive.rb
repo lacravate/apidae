@@ -13,14 +13,27 @@ module Apidae
   # the app'. Thanks to "Mr Blue Eyes" talent
   class Hive < Sinatra::Base
 
-    # Libraries API best bud !
-    # i am old but i haven't reached dotage yet.
-    # I just like to repeat myself.
-    extend Forwardable
+    class << self
 
-    # less code
-    # and "settings" is not pretty. So...
-    def_delegators :settings, :location, :population
+      attr_accessor :location
+
+      def ways_and_location
+        { ways: [ 'browse', 'browse/*', 'show/*', 'read/*' ], means: { location: location } }
+      end
+
+      def found_hive
+        require 'apidae/worker'
+        require 'apidae/cell'
+        require 'pathstring_root'
+
+        branching_class, root_class, worker_class = Apidae::Cell, PathstringRoot, Apidae::Worker
+
+        include worker_class
+        settings.location = root_class.new(location).tap do |l|
+          l.branching_class = branching_class
+          l.absolute!
+        end
+      end
 
     end
 
