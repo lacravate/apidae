@@ -1,7 +1,0 @@
-ways:
-  browse: 'row'
-  'browse/*': 'row'
-  'show/*': 'cell'
-  'media/*': 'honey'
-
-location: '.'
