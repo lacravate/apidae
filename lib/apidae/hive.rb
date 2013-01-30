@@ -54,11 +54,13 @@ module Apidae
       found_hive
     end
 
-    # Now we know who's who, where's where and what's what,
-    # define the application API and behaviors
-    include Construct
-    include Queen
-    include Population
+    private
+
+    # before hook, thanks to ways-and-means, to have the current
+    # path available everywhere as `current`
+    def before_anyway
+      location.select (params.any? && params['splat'].first) || ''
+    end
 
   end
 
