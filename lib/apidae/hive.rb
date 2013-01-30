@@ -1,14 +1,16 @@
 # encoding: utf-8
 
-# Libraries API best bud !
 require 'forwardable'
+
+# Sinatra, the actual star of the show
+require 'sinatra/base'
+
+# Sinatra routes from configuration
+require 'ways-and-means'
 
 module Apidae
 
-  # Do i need more ? We'll see.
-  class HiveImplationException < Exception; end
-
-  # the app'. Thanks to Mr Blue_eyes talent
+  # the app'. Thanks to "Mr Blue Eyes" talent
   class Hive < Sinatra::Base
 
     # Libraries API best bud !
@@ -20,17 +22,6 @@ module Apidae
     # and "settings" is not pretty. So...
     def_delegators :settings, :location, :population
 
-    # Routes from configuration. Registering and calling
-    register Sinatra::WaysAndMeans
-    ways_and_means!
-
-    # clumsy and tasteless, i must change that
-    if respond_to? :location
-      # we'll browse filesystem from this directory
-      # set as a Pathname
-      self.location = Pathname(location).realpath
-    else
-      raise HiveImplationError, "Sorry, dude, the hive can be implanted on nil (set location to anything in conf')"
     end
 
     # Who's populating the hive ?
