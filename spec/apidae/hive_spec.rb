@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Apidae::Hive do
+shared_examples_for "apidae" do
 
   let(:browser) { Rack::Test::Session.new(Rack::MockSession.new(described_class)) }
 
@@ -37,8 +37,8 @@ describe Apidae::Hive do
       browser.last_response.status.should == 200
     end
 
-    it "should respond to /media/lib/apidae.rb" do
-      browser.get '/media/lib/apidae.rb'
+    it "should respond to /read/lib/apidae.rb" do
+      browser.get '/read/lib/apidae.rb'
       browser.last_response.status.should == 200
     end
 
@@ -49,7 +49,10 @@ describe Apidae::Hive do
       browser.get '/browse/'
 
       Dir['*'].all? { |content| browser.last_response.body.include? content }.should be_true
-      browser.last_response.body.should include('Contents of /')
+      browser.last_response.body.should_not include('Parent directory')
+      browser.last_response.body.should include('Contents of "/"')
+      browser.last_response.body.should include('/</title>')
+      browser.last_response.body.should include('</style>')
       browser.last_response.status.should eq 200
     end
   end
@@ -60,7 +63,9 @@ describe Apidae::Hive do
 
       Dir['lib/*'].all? { |content| browser.last_response.body.include? File.basename(content) }.should be_true
       browser.last_response.body.should include('Parent directory')
-      browser.last_response.body.should include('Contents of lib/')
+      browser.last_response.body.should include('Contents of "lib/"')
+      browser.last_response.body.should include('lib/</title>')
+      browser.last_response.body.should include('</style>')
       browser.last_response.status.should eq 200
     end
   end
@@ -69,6 +74,8 @@ describe Apidae::Hive do
     it "should show the content of the url specified text file" do
       browser.get '/show/lib/apidae.rb'
 
+      browser.last_response.body.should include('lib/apidae.rb</title>')
+      browser.last_response.body.should include('</style>')
       browser.last_response.body.should include('Parent directory')
       browser.last_response.body.should include('<p>apidae.rb</p>')
       browser.last_response.body.should include(File.read('lib/apidae.rb'))
@@ -76,13 +83,26 @@ describe Apidae::Hive do
     end
   end
 
-  describe '/media/lib/apidae.rb' do
+  describe '/read/lib/apidae.rb' do
     it "should serve the url specified file contents" do
-      browser.get '/media/lib/apidae.rb'
+      browser.get '/read/lib/apidae.rb'
 
       browser.last_response.body.should == File.read('lib/apidae.rb')
       browser.last_response.status.should eq 200
     end
   end
 
+end
+
+module Wasp
+  class Clay < Apidae::Cell; end
+  class Nest < Apidae::Hive; end
+end
+
+describe Apidae::Hive do
+  it_should_behave_like "apidae"
+end
+
+describe Wasp::Nest do
+  it_should_behave_like "apidae"
 end
