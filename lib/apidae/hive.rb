@@ -37,13 +37,21 @@ module Apidae
 
     end
 
-    # Who's populating the hive ?
-    if respond_to? :population
-      # insects defined in the configuration ?
-      require "apidae/#{population}"
-    else
-      # or the basic generic apidae described in the lib' ?
-      Construct, Queen, Population = Apidae::Construct, Apidae::Queen, Apidae::Worker
+    extend Forwardable
+    # Routes from configuration. Registering.
+    register Sinatra::WaysAndMeans
+
+    # Routes from configuration. Calling
+    ways_and_means! ways_and_location
+
+    # "settings" is not pretty. And it's less typing. So...
+    def_delegators :settings, :location, :found_hive
+    def_delegators :location, :branching, :read
+    def_delegator :location, :last, :current
+
+    def initialize
+      super
+      found_hive
     end
 
     # Now we know who's who, where's where and what's what,
