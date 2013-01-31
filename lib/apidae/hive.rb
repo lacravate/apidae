@@ -45,9 +45,8 @@ module Apidae
     ways_and_means! ways_and_location
 
     # "settings" is not pretty. And it's less typing. So...
-    def_delegators :settings, :location, :found_hive
+    def_delegators :settings, :location, :found_hive, :current
     def_delegators :location, :branching, :read
-    def_delegator :location, :last, :current
 
     def initialize
       super
@@ -59,7 +58,7 @@ module Apidae
     # before hook, thanks to ways-and-means, to have the current
     # path available everywhere as `current`
     def before_anyway
-      location.select (params.any? && params['splat'].first) || ''
+      settings.current = location.select (params.any? && params['splat'].first) || ''
     end
 
   end
