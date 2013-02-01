@@ -16,7 +16,7 @@ module Apidae
 
     class << self
 
-      attr_accessor :location
+      attr_accessor :location, :current
 
       # routes and minimal config
       def ways_and_location
