@@ -1,25 +1,16 @@
 #!/usr/bin/env ruby
 
+# Load path
 $:.unshift File.expand_path('../lib', __FILE__)
 
-require 'getopt/long'
-
+# The app'
 require 'apidae'
+require 'apidae/queen'
 
-options = Getopt::Long.getopts(
-  ['--help', Getopt::OPTIONAL],
-  ['--server', Getopt::OPTIONAL],
-  ['--port', Getopt::OPTIONAL],
-  ['--daemonize', Getopt::OPTIONAL],
-  ['--browse', Getopt::OPTIONAL]
-)
-
-USAGE = "Usage : #{__FILE__} [--server <server_name> --port <port_number> --daemonize --browse </path/to/browse>]"
-
-if ['help', 'h'].any? { |o| options.has_key? o }
-  puts USAGE
-  exit
+module Apidae
+  class Hive
+    extend Queen
+  end
 end
 
-Apidae::Hive.location = options.delete('browse') { '.' }
-Apidae::Hive.run! options
+Apidae::Hive.implant!
