@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "getopt"
   s.add_dependency "pathstring", "~>0.0.3"
   s.add_dependency "ways-and-means", "~>0.0.3"
+
   s.add_development_dependency "rspec"
   s.add_development_dependency 'rack-test'
 end
