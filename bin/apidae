@@ -7,10 +7,4 @@ $:.unshift File.expand_path('../lib', __FILE__)
 require 'apidae'
 require 'apidae/queen'
 
-module Apidae
-  class Hive
-    extend Queen
-  end
-end
-
 Apidae::Hive.implant!

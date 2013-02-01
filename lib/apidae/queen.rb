@@ -43,3 +43,13 @@ module Apidae
 
 end
 
+module Apidae
+
+  class Hive
+
+    extend Queen
+
+  end
+
+end
+
