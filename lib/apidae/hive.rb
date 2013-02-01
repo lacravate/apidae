@@ -18,10 +18,17 @@ module Apidae
 
       attr_accessor :location, :current
 
+      def implant!
+        require 'apidae/queen'
+        super
+      end
+
       # routes and minimal config
       def ways_and_location
         { ways: [ 'browse', 'browse/*', 'show/*', 'read/*' ], means: { location: location } }
       end
+
+      private
 
       # hybrid heterogeneous method futhering the class definition at run-time
       def found_hive

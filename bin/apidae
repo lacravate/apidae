@@ -5,6 +5,6 @@ $:.unshift File.expand_path('../lib', __FILE__)
 
 # The app'
 require 'apidae'
-require 'apidae/queen'
 
+# And... roll !
 Apidae::Hive.implant!
