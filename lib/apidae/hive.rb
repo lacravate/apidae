@@ -12,7 +12,7 @@ require 'ways-and-means'
 module Apidae
 
   # the app'. Thanks to "Mr Blue Eyes" talent
-  class Hive < Sinatra::Base
+  class Swarm < Sinatra::Base
 
     class << self
 
@@ -30,48 +30,26 @@ module Apidae
 
       private
 
-      # hybrid heterogeneous method futhering the class definition at run-time
-      def found_hive
-        # Requirements set here because they will be made optional when the
-        # complete Hive subclassing plot will be achieved.
-        # Some other class defintion may define other workers or construct, and
-        # so forth, these `require` must not be done.
-        # In general, i prefer to delay as much class definition as possible
-        # until run-time
-        require 'apidae/worker'
-        require 'apidae/cell'
-        require 'pathstring_root'
-
-        # Hive population, architect, construct set with a mere declaration for the time being
-        branching_class, root_class, worker_class = Apidae::Cell, PathstringRoot, Apidae::Worker
-
-        # routes callbacks provider
-        include worker_class
-
-        # Routes setup
-        ways_and_means! ways_and_location
-
-        # document root as a PathringRoot or anything that will retrieve and
-        # list files easily
-        settings.location = root_class.new(location).tap do |l|
-          l.branching_class = branching_class
-          l.absolute!
-        end
-      end
-
     end
 
     extend Forwardable
     register Sinatra::WaysAndMeans
 
+    ways_and_means! ways_and_location
+
     # "settings" is not pretty. And it's less typing. So...
-    def_delegators :settings, :location, :found_hive, :current
+    def_delegators :settings, :current
     def_delegators :location, :branching, :read
+
+    attr_accessor :location
 
     def initialize
       super
-      # run-time class definitions
-      found_hive
+
+      @location = settings.root_class.new(settings.location).tap do |l|
+        l.branching_class = settings.branching_class if settings.branching_class
+        l.absolute!
+      end
     end
 
     private
@@ -81,6 +59,25 @@ module Apidae
     def before_anyway
       settings.current = location.select (params.any? && params['splat'].first) || ''
     end
+
+  end
+
+end
+
+require 'apidae/worker'
+require 'apidae/cell'
+require 'pathstring_root'
+
+module Apidae
+
+  class Hive < Swarm
+
+    # Hive mapper, construct, population
+    set :root_class, PathstringRoot
+    set :branching_class, Apidae::Cell
+
+    # routes callbacks provider
+    include Apidae::Worker
 
   end
 

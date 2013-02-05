@@ -45,7 +45,7 @@ end
 
 module Apidae
 
-  class Hive
+  class Swarm
 
     extend Queen
 
