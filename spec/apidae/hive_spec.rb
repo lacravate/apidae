@@ -101,6 +101,24 @@ end
 
 describe Apidae::Hive do
   it_should_behave_like "apidae"
+
+  describe 'run' do
+    let(:out) { '' }
+
+    before {
+      $stdout = StringIO.new(out, 'w')
+      described_class.implant! 'help' => true
+    }
+
+    it 'should start normally and exit with the help output' do
+     out.should include('Usage : ')
+    end
+
+    after {
+      $stdout = STDOUT
+    }
+  end
+
 end
 
 describe Wasp::Nest do

@@ -9,15 +9,14 @@ module Apidae
 
     attr_writer :charmer
 
-    def implant!
+    def implant!(options=environment)
       # Need help ?
-      if ['help', 'h'].any? { |o| environment.has_key? o }
+      if ['help', 'h'].any? { |o| options.has_key? o }
         puts etiquette
-        exit
       else
         # set the root directory, current directory as default, and go!
-        settings.location = environment.delete('browse') { '.' }
-        run! environment
+        settings.location = options.delete('browse') { '.' }
+        run! options
       end
     end
 

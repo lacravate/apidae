@@ -16,11 +16,9 @@ module Apidae
 
     class << self
 
-      attr_accessor :location, :current
-
-      def implant!
+      def implant!(options=nil)
         require 'apidae/queen'
-        super
+        options ? super : super()
       end
 
       # routes and minimal config
