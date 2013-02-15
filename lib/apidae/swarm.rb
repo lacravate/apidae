@@ -22,24 +22,22 @@ module Apidae
       end
 
       # routes and minimal config
+      # location key mainly to an accessor on the swarm after this name
       def ways_and_location
-        { ways: [ 'browse', 'browse/*', 'show/*', 'read/*' ], means: { location: location } }
+        { ways: [ 'browse', 'browse/*', 'show/*', 'read/*' ], means: { location: '' } }
       end
 
       private
 
     end
 
-    extend Forwardable
     register Sinatra::WaysAndMeans
-
     ways_and_means! ways_and_location
 
-    # "settings" is not pretty. And it's less typing. So...
-    def_delegators :settings, :current
+    extend Forwardable
     def_delegators :location, :branching, :read
 
-    attr_accessor :location
+    attr_accessor :location, :current
 
     def initialize
       super
@@ -55,7 +53,7 @@ module Apidae
     # before hook, thanks to ways-and-means, to have the current path available
     # everywhere as `current`
     def before_anyway
-      settings.current = location.select (params.any? && params['splat'].first) || ''
+      @current = location.select (params.any? && params['splat'].first) || ''
     end
 
   end
