@@ -39,6 +39,8 @@ module Apidae
 
     attr_accessor :location, :current
 
+    not_found { not_found }
+
     def initialize
       super
 
@@ -54,6 +56,19 @@ module Apidae
     # everywhere as `current`
     def before_anyway
       @current = location.select (params.any? && params['splat'].first) || ''
+      raise Sinatra::NotFound unless @current.exist?
+    end
+
+    def not_found
+      if current && !current.exist?
+        file_not_found
+      else
+        super
+      end
+    end
+
+    def file_not_found
+      redirect '/browse' unless @current.exist?
     end
 
   end

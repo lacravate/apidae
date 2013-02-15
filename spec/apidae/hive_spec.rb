@@ -17,6 +17,11 @@ shared_examples_for "apidae" do
       browser.last_response.status.should == 404
     end
 
+    it "should not respond 404 to /browse/plop" do
+      browser.get '/browse/plop'
+      browser.last_response.status.should == 302
+    end
+
     it "should respond to /browse" do
       browser.get '/browse'
       browser.last_response.status.should == 200
