@@ -32,7 +32,6 @@ module Apidae
     end
 
     register Sinatra::WaysAndMeans
-    ways_and_means! ways_and_location
 
     extend Forwardable
     def_delegators :location, :branching, :read

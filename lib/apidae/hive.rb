@@ -12,6 +12,8 @@ module Apidae
 
   class Hive < Swarm
 
+    ways_and_means! ways_and_location
+
     # Hive mapper, construct, population
     set :root_class, PathstringRoot
     set :branching_class, Apidae::Cell
