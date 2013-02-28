@@ -82,7 +82,7 @@ shared_examples_for "apidae" do
       browser.last_response.body.should include('lib/apidae.rb</title>')
       browser.last_response.body.should include('</style>')
       browser.last_response.body.should include('Parent directory')
-      browser.last_response.body.should include('<p>apidae.rb</p>')
+      browser.last_response.body.should include('<p>apidae.rb - ')
       browser.last_response.body.should include(File.read('lib/apidae.rb'))
       browser.last_response.status.should eq 200
     end

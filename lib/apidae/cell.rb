@@ -24,6 +24,17 @@ module Apidae
       replace '' if self == '.'
     end
 
+    def size
+      ['o', 'k', 'G'].inject(super.to_f) do |s, unit|
+        if s.is_a?(Float) && s >= 1024
+          s = s / 1024
+        elsif !s.is_a?(String)
+          s = "#{s.to_s.gsub(/(\.\d{3})\d+$/, "\\1")} #{unit}"
+        end
+        s
+      end
+    end
+
     # trailing slash on directories
     def slashed
       dup.tap { |d| d << '/' unless file? }
