@@ -40,10 +40,10 @@ module Apidae
 
     not_found { not_found }
 
-    def initialize
+    def initialize(*args)
       super
 
-      @location = settings.root_class.new(settings.location).tap do |l|
+      @location = settings.root_class.new((args.first || self.class).location).tap do |l|
         l.branching_class = settings.branching_class if settings.branching_class
         l.absolute!
       end
