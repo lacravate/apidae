@@ -11,6 +11,14 @@ require 'ways-and-means'
 
 module Apidae
 
+  module Buidler
+
+    def partial(template, locals={})
+      send settings.template_engine, template.to_sym, layout: false, locals: locals
+    end
+
+  end
+
   # the app'. Thanks to "Mr Blue Eyes" talent
   class Swarm < Sinatra::Base
 
@@ -31,6 +39,7 @@ module Apidae
 
     end
 
+    include Buidler
     register Sinatra::WaysAndMeans
 
     extend Forwardable
