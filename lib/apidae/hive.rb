@@ -12,14 +12,16 @@ module Apidae
 
   class Hive < Swarm
 
+    # Hive population, routes callbacks provider
+    include Apidae::Worker
+
     ways_and_means! ways_and_location
 
     # Hive mapper, construct, population
     set :root_class, PathstringRoot
     set :branching_class, Apidae::Cell
 
-    # Hive population, routes callbacks provider
-    include Apidae::Worker
+    set :root_url, '/browse'
 
   end
 

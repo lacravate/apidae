@@ -76,7 +76,7 @@ module Apidae
     end
 
     def file_not_found
-      redirect '/browse' unless @current.exist?
+      redirect(settings.root_url.is_a?(Array) ? send(*settings.root_url) : settings.root_url) unless @current.exist?
     end
 
   end
