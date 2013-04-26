@@ -53,8 +53,17 @@ module Apidae
     # before hook, thanks to ways-and-means, to have the current path available
     # everywhere as `current`
     def before_anyway
-      @current = location.select (params.any? && params['splat'].first) || ''
+      set_path
+      set_current
       raise Sinatra::NotFound unless request.put? || request.post? || @current.exist?
+    end
+
+    def set_path
+      @path = (params.any? && params['splat'].first) || ''
+    end
+
+    def set_current
+      @current = location.select @path
     end
 
     def not_found
