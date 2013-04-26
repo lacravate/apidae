@@ -54,7 +54,7 @@ module Apidae
     # everywhere as `current`
     def before_anyway
       @current = location.select (params.any? && params['splat'].first) || ''
-      raise Sinatra::NotFound unless @current.exist?
+      raise Sinatra::NotFound unless request.put? || request.post? || @current.exist?
     end
 
     def not_found

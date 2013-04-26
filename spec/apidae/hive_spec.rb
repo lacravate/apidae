@@ -101,7 +101,11 @@ end
 
 module Wasp
   class Clay < Apidae::Cell; end
-  class Nest < Apidae::Hive; end
+  class Nest < Apidae::Hive
+    ways_and_means! ways: { 'ploup/*' => %w|put post| }
+    def put_ploup; 'ploup'; end
+    alias :post_ploup :put_ploup
+  end
 end
 
 describe Apidae::Hive do
@@ -116,7 +120,7 @@ describe Apidae::Hive do
     }
 
     it 'should start normally and exit with the help output' do
-     out.should include('Usage : ')
+      out.should include('Usage : ')
     end
 
     after {
@@ -128,4 +132,17 @@ end
 
 describe Wasp::Nest do
   it_should_behave_like "apidae"
+
+  let(:browser) { Rack::Test::Session.new(Rack::MockSession.new(described_class)) }
+
+  it "should respond to PUT /ploup/plop" do
+    browser.put '/ploup/plop', params: 'some_params'
+    browser.last_response.status.should == 200
+  end
+
+  it "should respond to POST /ploup/plop" do
+    browser.post '/ploup/plop', params: 'some_params'
+    browser.last_response.status.should == 200
+  end
+
 end
