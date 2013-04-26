@@ -22,23 +22,6 @@ module Apidae
   # the app'. Thanks to "Mr Blue Eyes" talent
   class Swarm < Sinatra::Base
 
-    class << self
-
-      def implant!(options=nil)
-        require 'apidae/queen'
-        options ? super : super()
-      end
-
-      # routes and minimal config
-      # location key mainly to an accessor on the swarm after this name
-      def ways_and_location
-        { ways: [ 'browse', 'browse/*', 'show/*', 'read/*' ], means: { location: '' } }
-      end
-
-      private
-
-    end
-
     include Buidler
     register Sinatra::WaysAndMeans
 
@@ -48,6 +31,13 @@ module Apidae
     attr_accessor :location, :current
 
     not_found { not_found }
+
+    set :branching_class, nil
+
+    def self.implant!(options=nil)
+      require 'apidae/queen'
+      options ? super : super()
+    end
 
     def initialize(*args)
       super
