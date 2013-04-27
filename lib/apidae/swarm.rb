@@ -33,6 +33,7 @@ module Apidae
     not_found { not_found }
 
     set :redirect_on_file_not_found, true
+    set :location, nil
     set :branching_class, nil
 
     def self.implant!(options=nil)

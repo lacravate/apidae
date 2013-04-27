@@ -40,15 +40,7 @@ module Apidae
 
   end
 
-end
-
-module Apidae
-
-  class Swarm
-
-    extend Queen
-
-  end
+  class Swarm; extend Queen; end
 
 end
 

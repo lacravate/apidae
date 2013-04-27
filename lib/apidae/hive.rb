@@ -15,10 +15,8 @@ module Apidae
     # Hive population, routes callbacks provider
     include Apidae::Worker
 
-    # routes and minimal config
-    # means keys mainly to set accessors
-    ways_and_means! ways:  [ 'browse', 'browse/*', 'show/*', 'read/*' ],
-                    means: { location: '' }
+    # routes
+    ways_and_means! ways: [ 'browse', 'browse/*', 'show/*', 'read/*' ]
 
     # Hive mapper, construct, population
     set :root_class, PathstringRoot
