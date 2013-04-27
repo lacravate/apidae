@@ -60,7 +60,7 @@ module Apidae
     end
 
     def set_path
-      @path = (params.any? && params['splat'].first) || ''
+      @path = (params['splat'] && params['splat'].first) || ''
     end
 
     def set_current
