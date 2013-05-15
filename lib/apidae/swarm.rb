@@ -32,6 +32,7 @@ module Apidae
 
     not_found { not_found }
 
+    set :root_url, nil
     set :redirect_on_file_not_found, true
     set :location, nil
     set :branching_class, nil
@@ -69,7 +70,7 @@ module Apidae
     end
 
     def not_found
-      if settings.redirect_on_file_not_found && current && !current.exist?
+      if settings.root_url && settings.redirect_on_file_not_found && current && !current.exist?
         file_not_found
       else
         super
