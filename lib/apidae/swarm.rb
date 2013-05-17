@@ -53,12 +53,20 @@ module Apidae
 
     private
 
+    attr_reader :before_all, :after_all
+
     # before hook, thanks to ways-and-means, to have the current path available
     # everywhere as `current`
     def before_anyway
       set_path
       set_current
       raise Sinatra::NotFound unless request.put? || request.post? || @current.exist?
+      before_all
+    end
+
+    def after_anyway
+      after_all
+      redirect redirection if redirection
     end
 
     def set_path
@@ -67,6 +75,11 @@ module Apidae
 
     def set_current
       @current = location.select @path
+    end
+
+    def redirection(url=nil)
+      @redirection = url if url
+      @redirection.is_a?(Array) ? send(*@redirection) : @redirection
     end
 
     def not_found
