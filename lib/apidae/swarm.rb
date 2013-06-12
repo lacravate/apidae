@@ -60,7 +60,7 @@ module Apidae
     def before_anyway
       set_path
       set_current
-      raise Sinatra::NotFound unless request.put? || request.post? || @current.exist?
+      raise Sinatra::NotFound unless found?
       before_all
     end
 
@@ -80,6 +80,10 @@ module Apidae
     def redirection(url=nil)
       @redirection = url if url
       @redirection.is_a?(Array) ? send(*@redirection) : @redirection
+    end
+
+    def found?
+      request.put? || request.post? || @current.exist?
     end
 
     def not_found
