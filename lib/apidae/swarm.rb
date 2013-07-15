@@ -26,7 +26,10 @@ module Apidae
     register Sinatra::WaysAndMeans
 
     extend Forwardable
-    def_delegators :location, :branching, :read
+    def_delegators :location, :branching,
+                              :leaf_branching,
+                              :wire_branching,
+                              :read
 
     attr_accessor :location, :current
 
