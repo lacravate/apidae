@@ -56,19 +56,15 @@ module Apidae
 
     private
 
-    attr_reader :before_all, :after_all
-
     # before hook, thanks to ways-and-means, to have the current path available
     # everywhere as `current`
     def before_anyway
       set_path
       set_current
       raise Sinatra::NotFound unless found?
-      before_all
     end
 
     def after_anyway
-      after_all
       redirect redirection if redirection
     end
 
