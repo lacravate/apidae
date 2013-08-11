@@ -19,17 +19,25 @@ module Apidae
 
   end
 
+  module Mapper
+
+    def read
+      current.read
+    end
+
+  end
+
   # the app'. Thanks to "Mr Blue Eyes" talent
   class Swarm < Sinatra::Base
 
     include Buidler
+    include Mapper
     register Sinatra::WaysAndMeans
 
     extend Forwardable
     def_delegators :location, :branching,
                               :leaf_branching,
-                              :wire_branching,
-                              :read
+                              :wire_branching
 
     attr_accessor :location, :current
 
@@ -100,4 +108,3 @@ module Apidae
   end
 
 end
-
