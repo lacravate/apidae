@@ -41,15 +41,11 @@ apidae --port 9000 --browse /that/directory
 
 Mainly, there are two classes : Apidae::Swarm, the server code base inheriting
 from Sinatra::Base, and relying on `ways-and-means` gem for a few things like
-the application routing.
-
-See [ways-and-means](https://github.com/lacravate/ways-and-means)
+the application routing. See [ways-and-means](https://github.com/lacravate/ways-and-means)
 
 
 The Apidae::Cell, inheriting from Pathstring (for all its file/path related
-abilities), modeling the filesystem elements.
-
-See [pathstring](https://github.com/lacravate/pathstring)
+abilities), modeling the filesystem elements. See [pathstring](https://github.com/lacravate/pathstring)
 
 ```
 
