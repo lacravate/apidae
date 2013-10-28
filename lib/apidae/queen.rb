@@ -5,9 +5,8 @@ require 'getopt/long'
 
 module Apidae
 
+  # The Swarm needs to "include" a Queen to implant a Hive
   module Queen
-
-    attr_writer :charmer
 
     def implant!(options=environment)
       # Need help ?
@@ -20,6 +19,7 @@ module Apidae
       end
     end
 
+    # what we got from CLI
     def environment
       @environment ||= Getopt::Long.getopts(
         ['--help', Getopt::OPTIONAL],
@@ -30,17 +30,20 @@ module Apidae
       )
     end
 
+    # the way things should be
     def etiquette
       "Usage : #{charmer} [--server <server_name> --port <port_number> --daemonize --browse </path/to/browse>]"
     end
 
+    # the charmer unites the queen to the swarm
     def charmer
       @charmer ||= self.name.split('::').first.downcase
     end
 
   end
 
+  # class definition is never closed in ruby
+  # module extension runtime, then
   class Swarm; extend Queen; end
 
 end
-

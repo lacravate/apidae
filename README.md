@@ -1,11 +1,10 @@
 # Apidae
 
-Apidae is (well... intends to be) a Sinatra template-engine-agnostic code base
-to easily write web applications that will browse filesystems. As is, `apidae`
-already provides a small set of browsing features, but the user experience is
-at best minimalist.
+Apidae is a Sinatra template-engine-agnostic code base to easily write webapp'
+that will browse filesystems. As is, `apidae` already provides a small set of
+browsing features, but the user experience is at best minimalist.
 
-The idea is more to subclass `apidae` libs, overload two methods, choose a
+The idea is more to subclass `apidae` libs, overload on or two methods, choose a
 template engine, and roll.
 
 ## Installation
@@ -24,7 +23,7 @@ gem "apidae"
 
 ## Use
 
-### `apidae` executable
+### Out of the box
 
 ```
 apidae --help # to get the executable options
@@ -32,54 +31,60 @@ apidae --help # to get the executable options
 # to start a server on port 4567, browsing file starting from current directory
 apidae
 
-# to start a server on port 9000, browsing file starting from /that/directory
+# to start a server on port 9000, browsing files starting from /that/directory
+# with your web browser
 apidae --port 9000 --browse /that/directory
+
 ```
 
 ### `apidae` libs
 
-#### Hive
+Mainly, there are two classes : Apidae::Swarm, the server code base inheriting
+from Sinatra::Base, and relying on `ways-and-means` gem for a few things like
+the application routing.
 
-`Apidae::Hive` is the Sinatra app'.
-
-It defines four GET routes :
- - browse    # application root
- - browse/*  # list files in *
- - show/*    # show file *
- - read/*    # dumps file * contents
-
-Throughout the scope of the `Hive`, are available :
- - `location`  is the document root
- - `current`   is the path requested through the user GET request
- - `branching` is the files list under `current` if `current` is a directory
-
-#### Classes
-
-Unless you decide and set it otherwise :
-  - `current` is cast by `location` as an `Apidae::Cell`
-    `Apidae::Cell` is a fitting class derived from
-    [PathstringRoot](https://github.com/lacravate/pathstring#use).
-    It is a representation of the filesystem element, with a mainstream
-    `Pathname`-like interface. It has for instance the method `dirname` that
-    would let you easily craft a link to parent directory
-
-  - `location` is a `PathstringRoot`
-    [PathstringRoot](https://github.com/lacravate/pathstring#pathstringroot)
-    is a class utility that instantiates (in the case of `apidae`)
-    `Apidae::Cell` objects with itself as document root. Among other things, it
-    provides `branching` method to the `Hive`, giving the files list of the
-    current requested directory (as `Apidae::Cell` or anything you specified)
-
-If you want to change that, i strongly recommend (at least for now) that the
-replacements are derived from the above-mentionned classes. And you will have to
-tell the `Hive`, or its descendant, about it.
-
-To have your own version of the application running, here's what you could do :
-
-```ruby
-require 'apidae'
+See [ways-and-means](https://github.com/lacravate/ways-and-means)
 
 
+The Apidae::Cell, inheriting from Pathstring (for all its file/path related
+abilities), modeling the filesystem elements.
+
+See [pathstring](https://github.com/lacravate/pathstring)
+
+```
+
+module YourModule
+
+  class YourClass < Apidae::Swarm
+
+    # setup some routes routes
+    # with the help of ways-and-means gem
+    ways_and_means! ways: [ 'myjob/*' ]
+
+    # or the vanilla way
+    get "/some_stuff_to_do" do
+      # do the right stuff
+    end
+
+    # Give the Swarm infos it need to operate
+    set :root_class, PathstringRoot # the class modeling the document root
+    set :branching_class, Apidae::Cell # the class modeling the filesystem
+                                       # items, instantiated by the above
+
+    # ways-and-means automatically setup a route with a callback leading here
+    def myjob
+      # here you can do stuff with
+      #   `current` is the current filesystem item accessed
+      #   `branching` are its children if it's a directory
+      #   `wire_branching` are its directory children if it's a directory
+      #   `leaf_branching` are its file children if it's a directory
+      #
+      #   `location` is the document root
+    end
+
+  end
+
+end
 
 ```
 

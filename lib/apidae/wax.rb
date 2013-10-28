@@ -5,8 +5,11 @@ require 'base64'
 # I didn't want to package any template. I wanted a rendering stuff available
 # with a mere require. I also wanted this gem to be free from any templating
 # system dependency.
+
 # So i shamelessly devised a little something to do the job. In the end, as much
-# as a bit preposterous, it was fun to do.
+# as a bit preposterous, it was fun to do, with al the metap-programming.
+
+# And it's fun to read ! Each time i open this source, i get such a good laugh...
 
 module Apidae
 
@@ -44,7 +47,7 @@ module Apidae
         (klass::PARTS = (p  = MOLDS[name].last) && (p.is_a?(Hash) ? p : { body: p })).each do |part, pattern|
           # a method for each named part
           define_method part.to_sym do
-            tap { @part = part } # that merely sets the part we are 
+            tap { @part = part } # that merely sets the part we are
                                  # going to work on and return self
           end
         end

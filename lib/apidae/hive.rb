@@ -10,6 +10,8 @@ require 'pathstring_root'
 
 module Apidae
 
+  # application base class
+  # basic routes, basic and minimal settings
   class Hive < Swarm
 
     # Hive population, routes callbacks provider
@@ -22,6 +24,7 @@ module Apidae
     set :root_class, PathstringRoot
     set :branching_class, Apidae::Cell
 
+    # fallback URL
     set :root_url, '/browse'
 
   end
